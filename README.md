@@ -1,7 +1,5 @@
 # HackerRankSolutions
-
 sharing my solutions with friends
 
-solutions:
-
-Bit Array - https://www.hackerrank.com/challenges/bitset-1/problem
+C solutions:
+Bit Array - Hard - https://www.hackerrank.com/challenges/bitset-1/problem
