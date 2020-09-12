@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
+#include <string>
 using namespace std;
 
 typedef struct Tag {
