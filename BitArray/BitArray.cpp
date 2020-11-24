@@ -1,33 +1,38 @@
 #include <iostream>
-#include <string.h>
+// #include <string.h> //for memset
 using namespace std;
-
-//100000000 831602480 704408287 1134515747 -- test case 6
-//100000000 -- expected result
+#define mod ~(1u<<31)
+#define size (1u<<26)
+// #define getbit(a,b) (a & (1u << b))
+// #define setbit(a,b) ((a & (1u << b)) ? 0 : (a |= (1u << b)))
 
 int main() {
-    uint64_t n, s, p, q;
+    uint32_t n, s, p, q;
     cin >> n >> s >> p >> q;
 
-    uint64_t mod = (1U<<31);
-    int *intbits = new int[mod/32];
-    memset(intbits, 0, sizeof(int)*mod/32);
+    int *intbits = new int[size];
+    for (int i= 0; i < size; i++) intbits[i] = 0;
+    // memset(intbits, 0, sizeof(int)*size);
+    // uint32_t intbits[size] = {0};
 
-    s = s % mod;
-    for (int i = 0; i < n; i++) { // n >= 91015409 timesout for testcase6 on hackerrank
-        uint32_t index = s/32;
-        uint32_t bit = s%32;
-        if ((intbits[index] & (1U << bit))!=0) {
+    s &= mod;
+    for (int i = 0; i < n && i < 80000000; i++) { // n < 92215409 after get rid of / & %
+        uint32_t bits = s&31;
+        uint32_t index = s>>5;
+
+        //check if hit number before
+        if ((intbits[index] ^= (1u << bits)) == 0) {
             //if it hits the same number then it's starting to repeat a pattern
-            cout << i << endl;
+            cout << i;
             return 0;
         }
-        intbits[index] |= (1U << bit);
 
-        s = (p*s+q) % mod; //oh my god why is this math causing a timeout
+        s = ((p*s)+q) & mod;
     }
 
+    
     //if gets through loop without returning then n uniques
-    cout << n << endl;
+    cout << n;
+    delete[] intbits;
     return 0;
 }
